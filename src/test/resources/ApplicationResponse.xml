@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ns3="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                         xmlns:ns4="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2">
+    <ID>1</ID>
+    <UUID>UUID_4321</UUID>
+    <IssueDate>2015-04-07</IssueDate>
+    <IssueTime>22:12:59.751+03:00</IssueTime>
+    <ns3:SenderParty>
+        <ns3:PartyIdentification>
+            <ID schemeID="VAT">RO11588787</ID>
+        </ns3:PartyIdentification>
+    </ns3:SenderParty>
+    <ns3:ReceiverParty>
+        <ns3:PartyIdentification>
+            <ID schemeID="ZZZ">123456</ID>
+        </ns3:PartyIdentification>
+    </ns3:ReceiverParty>
+    <ns3:DocumentResponse>
+        <ns3:Response>
+            <ReferenceID>ABC123456789</ReferenceID>
+            <ResponseCode>CODE1</ResponseCode>
+            <Description>Description</Description>
+        </ns3:Response>
+        <ns3:DocumentReference>
+            <ID>ABC123456789</ID>
+            <UUID>UUID_1234</UUID>
+        </ns3:DocumentReference>
+    </ns3:DocumentResponse>
+</ns4:ApplicationResponse>

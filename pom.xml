@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ro.alx</groupId>
+    <artifactId>ph-ubl-client</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <name>PH-UBL Library OSGi Client</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.helger</groupId>
+            <artifactId>ph-ubl</artifactId>
+            <version>3.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.helger</groupId>
+                    <artifactId>ph-ubl20</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.helger</groupId>
+                    <artifactId>ph-ubl20-codelists</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.5.4</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>ro.alx.phublclient.activator.BActivator</Bundle-Activator>
+                        <Export-Package>ro.alx.phublclient.impl</Export-Package>
+                        <Import-Package>
+                            !javax.annotation.*,*
+                        </Import-Package>
+                        <_dsannotations>*</_dsannotations>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>unpack-unix</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.main.distribution</artifactId>
+                                    <version>5.0.1</version>
+                                    <type>tar.gz</type>
+                                    <outputDirectory>target</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
