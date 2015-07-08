@@ -3,6 +3,8 @@ package ro.alx.phublclient.impl;
 import com.helger.ubl.EUBL21DocumentType;
 import com.helger.ubl.UBL21Marshaller;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Source;
@@ -38,5 +40,25 @@ public class PhUblClient {
                 return true;
             }
         });
+    }
+
+    public ByteArrayOutputStream marshalWithoutClassloader(Object document, EUBL21DocumentType documentType) throws Exception {
+        JAXBContext jaxbContext = JAXBContext.newInstance(documentType.getImplementationClass());
+        Marshaller marshaller = jaxbContext.createMarshaller();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        marshaller.marshal(document, baos);
+
+        return baos;
+    }
+
+    public ByteArrayOutputStream marshalWithClassloader(Object document, EUBL21DocumentType documentType) throws Exception {
+        JAXBContext jaxbContext = JAXBContext.newInstance(documentType.getImplementationClass().getPackage().getName(), PhUblClient.class.getClassLoader());
+        Marshaller marshaller = jaxbContext.createMarshaller();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        marshaller.marshal(document, baos);
+
+        return baos;
     }
 }
