@@ -1,7 +1,7 @@
 package ro.alx.phublclient.impl;
 
-import com.helger.ubl.EUBL21DocumentType;
-import com.helger.ubl.UBL21Marshaller;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -10,8 +10,9 @@ import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+
+import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21Marshaller;
 
 public class PhUblClient {
 
@@ -19,7 +20,7 @@ public class PhUblClient {
         System.out.println("Marshalling UBL document of type " + documentType);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        UBL21Marshaller.writeUBLDocument(document, documentType, new ValidationEventHandler() {
+        UBL21Marshaller.writeUBLDocument(document, PhUblClient.class.getClassLoader(), documentType, new ValidationEventHandler() {
             @Override
             public boolean handleEvent(ValidationEvent validationEvent) {
                 return true;
@@ -34,7 +35,7 @@ public class PhUblClient {
         System.out.println("Unmarshalling UBL document of type " + ublDocumentType);
 
         Source source = new StreamSource(data);
-        return UBL21Marshaller.readUBLDocument(source, ublDocumentType.getImplementationClass(), new ValidationEventHandler() {
+        return UBL21Marshaller.readUBLDocument(source, PhUblClient.class.getClassLoader(), ublDocumentType.getImplementationClass(), new ValidationEventHandler() {
             @Override
             public boolean handleEvent(ValidationEvent validationEvent) {
                 return true;
