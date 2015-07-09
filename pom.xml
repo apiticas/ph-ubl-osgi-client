@@ -24,23 +24,14 @@
         </dependency>
         <dependency>
             <groupId>com.helger</groupId>
-            <artifactId>ph-ubl</artifactId>
-            <version>3.3.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.helger</groupId>
-                    <artifactId>ph-ubl20</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.helger</groupId>
-                    <artifactId>ph-ubl20-codelists</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>ph-ubl21</artifactId>
+            <version>4.0.0-RC1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

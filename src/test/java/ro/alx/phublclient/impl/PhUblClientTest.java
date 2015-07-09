@@ -1,13 +1,13 @@
 package ro.alx.phublclient.impl;
 
-import com.helger.ubl.EUBL21DocumentType;
-import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
-import org.junit.Test;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
+
+import org.junit.Test;
+
+import com.helger.ubl21.EUBL21DocumentType;
+
+import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
 
 public class PhUblClientTest {
 

@@ -1,14 +1,16 @@
 package ro.alx.phublclient.commands;
 
-import com.helger.ubl.EUBL21DocumentType;
-import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
-import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ObjectFactory;
+import java.net.URL;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
-import ro.alx.phublclient.impl.PhUblClient;
 
-import java.net.URL;
+import com.helger.ubl21.EUBL21DocumentType;
+
+import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
+import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ObjectFactory;
+import ro.alx.phublclient.impl.PhUblClient;
 
 public class PhUblClientCommands {
 
