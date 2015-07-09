@@ -17,7 +17,7 @@ public class BActivator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
         Hashtable<String, Object> props = new Hashtable<>();
         props.put("osgi.command.scope", "phubl");
-        props.put("osgi.command.function", new String[]{"marshal", "unmarshal"});
+        props.put("osgi.command.function", new String[]{"marshal", "unmarshal", "marshalWithoutClassloader", "marshalWithClassloader"});
 
         Hashtable<String, Object> noprops = new Hashtable<>();
 

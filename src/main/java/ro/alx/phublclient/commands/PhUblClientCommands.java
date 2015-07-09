@@ -2,6 +2,7 @@ package ro.alx.phublclient.commands;
 
 import com.helger.ubl.EUBL21DocumentType;
 import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
+import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ObjectFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -42,6 +43,35 @@ public class PhUblClientCommands {
         URL url = PhUblClientCommands.class.getResource(APPLICATION_RESPONSE_XML_FILE_PATH);
         try {
             return ((ApplicationResponseType) transformer.unmarshal(url.openStream(), EUBL21DocumentType.APPLICATION_RESPONSE)).getIDValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String marshalWithoutClassloader() {
+        BundleContext ctx = FrameworkUtil.getBundle(ro.alx.phublclient.impl.PhUblClient.class)
+                .getBundleContext();
+        ServiceReference ref = ctx.getServiceReference(ro.alx.phublclient.impl.PhUblClient.class);
+
+        PhUblClient transformer = (PhUblClient) ctx.getService(ref);
+        try {
+            return transformer.marshalWithoutClassloader(new ObjectFactory().createApplicationResponse(APPLICATION_RESPONSE), EUBL21DocumentType.APPLICATION_RESPONSE).toString("UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String marshalWithClassloader() {
+        BundleContext ctx = FrameworkUtil.getBundle(ro.alx.phublclient.impl.PhUblClient.class)
+                .getBundleContext();
+        ServiceReference ref = ctx.getServiceReference(ro.alx.phublclient.impl.PhUblClient.class);
+
+        PhUblClient transformer = (PhUblClient) ctx.getService(ref);
+
+        try {
+            return transformer.marshalWithClassloader(new ObjectFactory().createApplicationResponse(APPLICATION_RESPONSE), EUBL21DocumentType.APPLICATION_RESPONSE).toString("UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
