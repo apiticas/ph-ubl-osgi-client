@@ -1,7 +1,10 @@
 package ro.alx.phublclient.impl;
 
-import com.helger.ubl.EUBL21DocumentType;
-import com.helger.ubl.UBL21Marshaller;
+import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.xml.transform.ResourceStreamSource;
+import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21Marshaller;
+import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -19,7 +22,7 @@ public class PhUblClient {
         System.out.println("Marshalling UBL document of type " + documentType);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        UBL21Marshaller.writeUBLDocument(document, documentType, new ValidationEventHandler() {
+        UBL21Marshaller.writeUBLDocument(document, PhUblClient.class.getClassLoader(), documentType, new ValidationEventHandler() {
             @Override
             public boolean handleEvent(ValidationEvent validationEvent) {
                 return true;
@@ -30,11 +33,11 @@ public class PhUblClient {
         return os;
     }
 
-    public Object unmarshal(InputStream data, EUBL21DocumentType ublDocumentType) {
-        System.out.println("Unmarshalling UBL document of type " + ublDocumentType);
+    public Object unmarshal(InputStream data, EUBL21DocumentType documentType) {
+        System.out.println("Unmarshalling UBL document of type " + documentType);
 
         Source source = new StreamSource(data);
-        return UBL21Marshaller.readUBLDocument(source, ublDocumentType.getImplementationClass(), new ValidationEventHandler() {
+        return UBL21Marshaller.readUBLDocument(source, PhUblClient.class.getClassLoader(), documentType.getImplementationClass(), new ValidationEventHandler() {
             @Override
             public boolean handleEvent(ValidationEvent validationEvent) {
                 return true;
@@ -60,5 +63,19 @@ public class PhUblClient {
         marshaller.marshal(document, baos);
 
         return baos;
+    }
+
+    public String getARSchemaWithClassloader() throws Exception {
+        ClassPathResource classPathResource = new ClassPathResource("schemas/ubl21/maindoc/UBL-ApplicationResponse-2.1.xsd", ApplicationResponseType.class.getClassLoader());
+        ResourceStreamSource resourceStreamSource = new ResourceStreamSource(classPathResource);
+
+        return Boolean.toString(resourceStreamSource.getInputStream() != null);
+    }
+
+    public String getARSchemaWithoutClassloader() throws Exception {
+        ClassPathResource classPathResource = new ClassPathResource("schemas/ubl21/maindoc/UBL-ApplicationResponse-2.1.xsd");
+        ResourceStreamSource resourceStreamSource = new ResourceStreamSource(classPathResource);
+
+        return Boolean.toString(resourceStreamSource.getInputStream() != null);
     }
 }

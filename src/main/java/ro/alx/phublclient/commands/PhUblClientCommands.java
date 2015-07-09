@@ -1,6 +1,6 @@
 package ro.alx.phublclient.commands;
 
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ApplicationResponseType;
 import oasis.names.specification.ubl.schema.xsd.applicationresponse_21.ObjectFactory;
 import org.osgi.framework.BundleContext;
@@ -72,6 +72,34 @@ public class PhUblClientCommands {
 
         try {
             return transformer.marshalWithClassloader(new ObjectFactory().createApplicationResponse(APPLICATION_RESPONSE), EUBL21DocumentType.APPLICATION_RESPONSE).toString("UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getARSchemaWithClassloader() {
+        BundleContext ctx = FrameworkUtil.getBundle(ro.alx.phublclient.impl.PhUblClient.class)
+                .getBundleContext();
+        ServiceReference ref = ctx.getServiceReference(ro.alx.phublclient.impl.PhUblClient.class);
+
+        PhUblClient transformer = (PhUblClient) ctx.getService(ref);
+        try {
+            return transformer.getARSchemaWithClassloader();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getARSchemaWithoutClassloader() {
+        BundleContext ctx = FrameworkUtil.getBundle(ro.alx.phublclient.impl.PhUblClient.class)
+                .getBundleContext();
+        ServiceReference ref = ctx.getServiceReference(ro.alx.phublclient.impl.PhUblClient.class);
+
+        PhUblClient transformer = (PhUblClient) ctx.getService(ref);
+        try {
+            return transformer.getARSchemaWithoutClassloader();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
